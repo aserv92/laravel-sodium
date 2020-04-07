@@ -174,4 +174,15 @@ class ServiceTest extends TestCase
         $this->expectExceptionMessage(NonceException::message);
         $service->encrypt($message, $nonce25Char, $key);
     }
+
+    public function testCanDecryptValueByNonce()
+    {
+        $key = 'test_key';
+        $nonce = 'abcdefghijklmnopqrstuvwxyz123456';
+        $originalValue = 'testing';
+        $service = new SodiumService($key);
+        $encryptedValue = explode('.', $service->encrypt($originalValue, base64_decode($nonce)))[1];
+        $decryptedValue = $service->decryptValueByNonce($encryptedValue, $nonce);
+        $this->assertSame($originalValue, $decryptedValue);
+    }
 }
