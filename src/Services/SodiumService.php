@@ -131,4 +131,20 @@ class SodiumService implements Contract
 
         throw new KeyNotFoundException(KeyNotFoundException::NEITHER_KEY_NOT_FOUND_MESSAGE);
     }
+
+    /**
+     * Decrypt the value using a nonce.
+     *
+     * @param string $value the value to decrypt
+     * @param string $nonce The base64 encoded nonce;
+     */
+    public function decryptValueByNonce(string $value, string $nonce): string
+    {
+        try {
+            return $this->decrypt($nonce ? implode('.', [$nonce, $value]) : $value);
+        } catch (Exception $e) {
+            //Worst case scenario, return the text in its encrypted state.
+            return $value;
+        }
+    }
 }
