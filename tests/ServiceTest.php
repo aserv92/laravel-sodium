@@ -175,6 +175,11 @@ class ServiceTest extends TestCase
         $service->encrypt($message, $nonce25Char, $key);
     }
 
+    /**
+     * Test that service can decrypt a value with a nonce.
+     *
+     * @throws KeyNotFoundException
+     */
     public function testCanDecryptValueByNonce()
     {
         $key = 'test_key';

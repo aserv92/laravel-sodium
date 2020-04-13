@@ -136,7 +136,7 @@ class SodiumService implements Contract
      * Decrypt the value using a nonce or null on failure.
      *
      * @param string $value the value to decrypt
-     * @param string $nonce The base64 encoded nonce;
+     * @param string $nonce The base64 encoded nonce
      */
     public function decryptValueByNonce(string $value, string $nonce): ?string
     {
