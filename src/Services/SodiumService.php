@@ -133,18 +133,17 @@ class SodiumService implements Contract
     }
 
     /**
-     * Decrypt the value using a nonce.
+     * Decrypt the value using a nonce or null on failure.
      *
      * @param string $value the value to decrypt
      * @param string $nonce The base64 encoded nonce;
      */
-    public function decryptValueByNonce(string $value, string $nonce): string
+    public function decryptValueByNonce(string $value, string $nonce): ?string
     {
         try {
             return $this->decrypt($nonce ? implode('.', [$nonce, $value]) : $value);
-        } catch (Exception $e) {
-            //Worst case scenario, return the text in its encrypted state.
-            return $value;
+        } catch (DecryptException | KeyNotFoundException | MalformationException $e) {
+            return null;
         }
     }
 }
